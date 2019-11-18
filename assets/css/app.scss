@@ -1,3 +1,16 @@
+// customize some Bootstrap variables
+$body-bg: #ffe6e9;
+$body-color: lighten(#111, 15%);
+//=====  Navbar  =====
+$active-bg-color: lightpink;
+$navbar-dark-brand-color: LightCyan;
+$navbar-dark-color: lightpink;
+$navbar-dark-hover-color: LightCyan;
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
 body {
-    background-color: blueviolet;
+  font-family: 'Rock Salt', cursive;
+//'Nanum Brush Script', cursive;
 }
