@@ -11,7 +11,7 @@ class DefaultController extends AbstractController
     public function index() :Response
     {
         /**
-         * @Route("/app", name="app_index")
+         * @Route("/", name="app_index")
          */
         return $this->render('home.html.twig', ['site' => 'Wild Séries']);
     }

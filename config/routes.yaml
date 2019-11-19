@@ -7,6 +7,6 @@ index:
 #  path: /wild/
 #  controller: App\Controller\WildController::index
 
-app_show_index:
-  path: /
-  controller: App\Controller\DefaultController::index
+# app_show_index:
+#  path: /
+#  controller: App\Controller\DefaultController::index
