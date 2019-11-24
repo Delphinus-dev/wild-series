@@ -15,4 +15,15 @@ class WildController extends AbstractController
          */
             return $this->render('wild/index.html.twig', ['website' => 'Wild Séries']);
     }
+
+// class WildController extends AbstractController
+//{
+//[...]
+    /**
+     * @Route("/wild/show/{page}", name="wild_show")
+     */
+    //public function show(int $page): Response
+    //{
+    //    return $this->render('wild/show.html.twig', ['page' => $page]);
+    //}
 }
