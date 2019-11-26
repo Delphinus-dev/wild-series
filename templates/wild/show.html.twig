@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {# Si aucun slug n'est fourni, il faudra afficher “Aucune série sélectionnée, veuillez choisir une série”
+    dans la balise h1 #}
+    {% if result == "Noslug" %}
+        <h1>Aucune série sélectionnée, veuillez choisir une série</h1>
+    {% else %}
+        <h1>{{ result }}</h1>
+    {% endif %}
+{% endblock %}

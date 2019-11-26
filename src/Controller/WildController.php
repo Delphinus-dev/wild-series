@@ -6,24 +6,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/wild", name="wild_")
+ */
 class WildController extends AbstractController
 {
     public function index() :Response
     {
         /**
-         * @Route("/wild", name="wild_index")
+         * @Route("/", name="index")
          */
             return $this->render('wild/index.html.twig', ['website' => 'Wild Séries']);
     }
 
-// class WildController extends AbstractController
-//{
-//[...]
+    // TODO terminer la fonction suivante :
+
+    // Si aucun slug n'est fourni, il faudra afficher “Aucune série sélectionnée, veuillez choisir une série” dans la balise h1
+
     /**
-     * @Route("/wild/show/{page}", name="wild_show")
+     * @Route("/show/{slug}", requirements={"slug"="\b[a-z0-9-]+\b"}, name="show")
+     * @param string $slug
+     * @return Response
      */
-    //public function show(int $page): Response
-    //{
-    //    return $this->render('wild/show.html.twig', ['page' => $page]);
-    //}
+    public function show(string $slug = "noslug"): Response
+    {
+        $result = str_replace("-", " ", ucwords($slug));
+        return $this->render('wild/show.html.twig', ['result' => $result,]);
+    }
 }
