@@ -19,10 +19,6 @@ class WildController extends AbstractController
             return $this->render('wild/index.html.twig', ['website' => 'Wild Séries']);
     }
 
-    // TODO terminer la fonction suivante :
-
-    // Si aucun slug n'est fourni, il faudra afficher “Aucune série sélectionnée, veuillez choisir une série” dans la balise h1
-
     /**
      * @Route("/show/{slug}", requirements={"slug"="\b[a-z0-9-]+\b"}, name="show")
      * @param string $slug

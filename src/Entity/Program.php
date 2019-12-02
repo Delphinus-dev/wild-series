@@ -27,7 +27,7 @@ class Program
     private $summary;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $poster;
 
@@ -71,7 +71,7 @@ class Program
         return $this->poster;
     }
 
-    public function setPoster(string $poster): self
+    public function setPoster(?string $poster): self
     {
         $this->poster = $poster;
 
