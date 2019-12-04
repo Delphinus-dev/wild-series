@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ slug }}{% endblock %}
+
 {% block body %}
     {# Si aucun slug n'est fourni, il faudra afficher “Aucune série sélectionnée, veuillez choisir une série”
     dans la balise h1 #}
-    {% if result == "Noslug" %}
-        <h1>Aucune série sélectionnée, veuillez choisir une série</h1>
-    {% else %}
-        <h1>{{ result }}</h1>
-    {% endif %}
+
+    <div class="media">
+        <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
+        <div class="media-body">
+            <h1 class="mt-0">{{ program.title }}</h1>
+            <p>{{ program.summary }}</p>
+            <p>Catégorie : {{ program.category.name }}</p>
+        </div>
+    </div>
+
+    <a href="{{ path('wild_index') }}">
+        Retour à l'accueil
+    </a>
+
 {% endblock %}
