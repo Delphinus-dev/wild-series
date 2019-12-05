@@ -12,6 +12,16 @@
             <h1 class="mt-0">{{ program.title }}</h1>
             <p>{{ program.summary }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
+            <div>
+                {% for season in seasons %}
+                <div>
+                    {# TODO corriger cette ligne : #}
+                    <a href="{{ path('wild_ '. season.title.) }}">Saison {{ season.title }}</a>
+                </div>
+        {% else %}
+            Aucune saison trouvée.
+        {% endfor %}
+            </div>
         </div>
     </div>
 
