@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Episode;
 use App\Entity\Program;
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,43 +101,38 @@ class WildController extends AbstractController
      */
         public function showByCategory(string $categoryName) : Response
         {
-        $category = $this ->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name'=>$categoryName]);
-        $program =  $this ->getDoctrine()
-            ->getRepository(Program::class)
-            ->findBy(['category'=>$category->getId()], ['id'=>'DESC'], 3);
-        return $this->render('wild/category.html.twig',
-            ['category' => $categoryName,
-                'programs' => $program,
-            ]);
-
-        /* mon ancien code, pour mémoire :
-
-        // si slug catégorie vide :
-        if (!$categoryName) {
-            throw $this->createNotFoundException('No category has been chosen to find programs in program\'s table.');
+            $category = $this->getDoctrine()
+                ->getRepository(Category::class)
+                ->findOneBy(['name' => $categoryName]);
+            $program = $this->getDoctrine()
+                ->getRepository(Program::class)
+                ->findBy(['category' => $category->getId()], ['id' => 'DESC'], 3);
+            return $this->render('wild/category.html.twig',
+                ['category' => $categoryName,
+                    'programs' => $program,
+                ]);
         }
-        // si slug catégorie présent, transformer en string avec espaces et majuscule au début :
-        $categoryName = preg_replace('/-/', ' ', ucwords(trim(strip_tags($categoryName)), "-"));
 
-        $category = $this ->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name'=>$categoryName]);
-        // si la catégorie n'existe pas :
-        if (!$categoryName) {
-            throw $this->createNotFoundException('No existing category is called '.$category.'.');
-        }
-        // TODO corriger la suite
-        // renvoyer un TABLEAU des 3 id derniers id de séries par ordre descendant :
-        $program = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findBy(['category_id' => $categoryName], ['id' => 'DESC'], 3, 1);
-
-        return $this->render('wild/category.html.twig', [
-            'program' => $program,
-            'category' => $categoryName,
-        ]);
-        */
+            /**
+             * Getting episodes in a season
+             *
+             * @param integer $id
+             * @Route("/season/{id<^[0-9-]+$>?}", name="show_season")
+             * @return Response
+             */
+            public function showBySeason(int $id) : Response
+        {
+            $season = $this->getDoctrine()
+                ->getRepository(Season::class)
+                ->findOneBy(['id' => $id]);
+            $episodes =  $season->getEpisodes();
+            $program =  $season->getProgramId()->getTitle();
+            return $this->render('wild/season.html.twig',
+                [
+                    'season' => $season,
+                    'episodes' => $episodes,
+                    'program' => $program,
+                ]
+            );
     }
 }

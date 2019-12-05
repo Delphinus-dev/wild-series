@@ -3,8 +3,6 @@
 {% block title %}{{ slug }}{% endblock %}
 
 {% block body %}
-    {# Si aucun slug n'est fourni, il faudra afficher “Aucune série sélectionnée, veuillez choisir une série”
-    dans la balise h1 #}
 
     <div class="media">
         <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
@@ -15,8 +13,8 @@
             <div>
                 {% for season in seasons %}
                 <div>
-                    {# TODO corriger cette ligne : #}
-                    <a href="{{ path('wild_ '. season.title.) }}">Saison {{ season.title }}</a>
+                    {# TODO corriger le path de cette ligne : #}
+                    <a href="{{ path('wild_ '. season.id .) }}">Saison {{ season.number }} ({{ season.year }})</a>
                 </div>
         {% else %}
             Aucune saison trouvée.

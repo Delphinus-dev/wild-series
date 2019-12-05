@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ program }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ program }} : épisodes listés par saison</h1>
+    {% if season is defined %}
+        <div>
+            <h2>Saison {{ season.number }}</h2>
+            <p>{{ season.description }}</p>
+            <div>
+                <h2>Liste des épisodes</h2>
+                {% for episode in episodes %}
+                    <div>
+                        Épisode {{ episode.number }} : {{ episode.title }}
+                    </div>
+                {% else %}
+                    Aucune série trouvée.
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        Aucune série trouvée.
+    {% endif %}
+    <a href="{{ path('wild_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}
