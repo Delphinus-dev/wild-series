@@ -9,16 +9,16 @@
         <div class="media-body">
             <h1 class="mt-0">{{ program.title }}</h1>
             <p>{{ program.summary }}</p>
-            <p>Catégorie : {{ program.category.name }}</p>
+            <h3>Catégorie :</h3> <p>{{ program.category.name }}</p>
             <div>
+                <h3>Liste des saisons :</h3>
                 {% for season in seasons %}
-                <div>
-                    {# TODO corriger le path de cette ligne : #}
-                    <a href="{{ path('wild_ '. season.id .) }}">Saison {{ season.number }} ({{ season.year }})</a>
-                </div>
-        {% else %}
-            Aucune saison trouvée.
-        {% endfor %}
+                    <div>
+                        <a href="{{ path('wild_show_season',{'id':season.id}) }}">Saison {{ season.number }} ({{ season.year }})</a>
+                    </div>
+                {% else %}
+                    <p>Aucune saison trouvée.</p>
+                {% endfor %}
             </div>
         </div>
     </div>
