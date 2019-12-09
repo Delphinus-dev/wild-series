@@ -13,16 +13,17 @@
                 <h2>Liste des épisodes</h2>
                 {% for episode in episodes %}
                     <div>
-                        Épisode {{ episode.number }} : {{ episode.title }}
+                        <a href="{{ path('wild_show_episode',{'id':episode.id}) }}">Épisode {{ episode.number }} : {{ episode.title }}</a>
                     </div>
                 {% else %}
-                    Aucune série trouvée.
+                    Aucun épisode trouvé.
                 {% endfor %}
             </div>
         </div>
     {% else %}
         Aucune série trouvée.
     {% endif %}
+    <br/>
     <a href="{{ path('wild_index') }}">
         Retour à l'accueil
     </a>

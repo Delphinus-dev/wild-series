@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ episode.title }}{% endblock %}
+
+{% block body %}
+
+    <h1>{{ program.title }}</h1>
+    <h2>Saison {{ season.number }} - épisode {{ episode.number }}</h2>
+    {% if episode is defined %}
+        <div>
+            <h2>Titre : {{ episode.title }}</h2>
+            <h2>Résumé : </h2>
+            <p>{{ episode.synopsis }}</p>
+        </div>
+    {% else %}
+        Aucun épisode trouvé.
+    {% endif %}
+    <a href="{{ path('wild_show_season',{'id':season.id}) }}">
+        Voir la saison {{ season.number }} ({{ season.year }})
+    </a><br/>
+    <a href="{{ path('wild_show',{'id':program.id}) }}">
+        Voir la série : {{ program.title }}
+    </a><br/><br/>
+    <a href="{{ path('wild_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}

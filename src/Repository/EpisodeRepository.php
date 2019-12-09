@@ -19,10 +19,9 @@ class EpisodeRepository extends ServiceEntityRepository
         parent::__construct($registry, Episode::class);
     }
 
-    // /**
-    //  * @return Episode[] Returns an array of Episode objects
-    //  */
-    /*
+    /**
+    * @return Episode[] Returns an array of Episode objects
+    */
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('e')
@@ -34,9 +33,7 @@ class EpisodeRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
     public function findOneBySomeField($value): ?Episode
     {
         return $this->createQueryBuilder('e')
@@ -46,5 +43,4 @@ class EpisodeRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
 }
