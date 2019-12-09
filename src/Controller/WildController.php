@@ -6,8 +6,12 @@ use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CategoryType;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -62,7 +66,28 @@ class WildController extends AbstractController
             'program' => $program,
             'slug' => $slug,
             'seasons' => $seasons,
-        ]);
+        ]
+        );
+    }
+
+    /**
+     * @Route("/category", name="add_category")
+     * @param Request $request
+     * @return Response
+     */
+    public function addCategory(Request $request, EntityManagerInterface $entityManager) : Response
+    {
+        $category =  new Category();
+        $form = $this->createForm(CategoryType::class,$category,['method' => Request::METHOD_POST]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($category);
+            $entityManager->flush();
+        }
+        return $this->render('wild/add_category.html.twig', [
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -72,41 +97,19 @@ class WildController extends AbstractController
      * @Route("/category/{categoryName<^[a-z0-9-]+$>?}", name="show_category")
      * @return Response
      */
-        public function showByCategory(string $categoryName) : Response
-        {
-            $category = $this->getDoctrine()
-                ->getRepository(Category::class)
-                ->findOneBy(['name' => $categoryName]);
-            $program = $this->getDoctrine()
-                ->getRepository(Program::class)
-                ->findBy(['category' => $category->getId()], ['id' => 'DESC'], 3);
-            return $this->render('wild/category.html.twig',
-                ['category' => $categoryName,
-                    'programs' => $program,
-                ]);
-        }
-
-            /**
-             * Getting episodes in a season
-             *
-             * @param integer $id
-             * @Route("/season/{id<^[0-9-]+$>?}", name="show_season")
-             * @return Response
-             */
-            public function showBySeason(int $id) : Response
-        {
-            $season = $this->getDoctrine()
-                ->getRepository(Season::class)
-                ->findOneBy(['id' => $id]);
-            $episodes =  $season->getEpisodes();
-            $program =  $season->getProgramId()->getTitle();
-            return $this->render('wild/season.html.twig',
-                [
-                    'season' => $season,
-                    'episodes' => $episodes,
-                    'program' => $program,
-                ]
-            );
+    public function showByCategory(string $categoryName) : Response
+    {
+        $category = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findOneBy(['name' => $categoryName]);
+        $program = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findBy(['category' => $category->getId()], ['id' => 'DESC'], 3);
+        return $this->render('wild/category.html.twig', [
+                'category' => $categoryName,
+                'programs' => $program,
+            ]
+        );
     }
 
     /**
@@ -116,13 +119,35 @@ class WildController extends AbstractController
     {
         $season = $episode->getSeasonId();
         $program = $season->getProgramId();
-        // $slug = preg_replace(' ', '-', strtolower($program->getTitle()), -1);
 
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
-            // 'slug' => $slug,
-            ]);
+            ]
+        );
+    }
+
+    /**
+     * Getting episodes in a season
+     *
+     * @param integer $id
+     * @Route("/season/{id<^[0-9-]+$>?}", name="show_season")
+     * @return Response
+     */
+    public function showBySeason(int $id) : Response
+    {
+        $season = $this->getDoctrine()
+            ->getRepository(Season::class)
+            ->findOneBy(['id' => $id]);
+        $episodes =  $season->getEpisodes();
+        $program =  $season->getProgramId()->getTitle();
+        return $this->render('wild/season.html.twig',
+            [
+                'season' => $season,
+                'episodes' => $episodes,
+                'program' => $program,
+            ]
+        );
     }
 }
