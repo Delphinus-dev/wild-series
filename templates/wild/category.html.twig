@@ -3,12 +3,11 @@
 {% block title %}{{ category }}{% endblock %}
 
 {% block body %}
-    {# afficher 3 séries par ordre d'id décroissant #}
 
     <h1>Les 3 dernières séries ajoutées à la catégorie {{ category }} : </h1>
     {% for program in programs %}
         <div>
-            <h2>{#{{ program.id }} / #}{{ program.title }}</h2>
+            <h2>{{ program.title }}</h2>
             <p>{{ program.summary }}</p>
         </div>
     {% else %}

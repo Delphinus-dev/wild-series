@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wild Séries|{{ actor.name }}{% endblock %}
+
+{% block body %}
+    {# TODO afficher Le nom de l’acteur, la liste des séries associées à cet acteur. #}
+
+    <h1>{{ actor.name }}</h1>
+    <ul>
+    {% for program in programs %}
+        <li>
+            <a href="{{ path('wild_show',{'slug': program.title}) }}">{{ program.title }}</a>
+        </li>
+    {% else %}
+        <li>
+            Aucune série trouvée.
+        </li>
+    {% endfor %}
+    </ul>
+    <br/>
+    <a href="{{ path('wild_index') }}">
+        Retour à l'accueil
+    </a>
+
+{% endblock %}
