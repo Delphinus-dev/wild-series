@@ -38,7 +38,7 @@ class WildController extends AbstractController
      * Getting a program with a formatted slug for title
      *
      * @param string $slug The slugger
-     * @Route("/show/{slug<^[a-z0-9-]+$>?}", name="show")
+     * @Route("/show/{slug<^[a-zA-Z0-9\-\s]+$>?}", name="show")
      * @return Response
      */
     public function show(?string $slug): Response
@@ -52,9 +52,7 @@ class WildController extends AbstractController
         $program = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findOneBy(['title' => mb_strtolower($slug)]); // OU : findOneByTitle(mb_strtolower($slug)
-        $seasons = $program->getSeasons(); //->getTitle();
-//            ->getRepository(Season::class)
-//            ->findBy(['program_id' => $slug]);
+        $seasons = $program->getSeasons();
 
         if (!$program) {
             throw $this->createNotFoundException('No program with '.$slug.' title found in program\'s table.');
@@ -118,11 +116,13 @@ class WildController extends AbstractController
     {
         $season = $episode->getSeasonId();
         $program = $season->getProgramId();
+        // $slug = preg_replace(' ', '-', strtolower($program->getTitle()), -1);
 
         return $this->render('wild/episode.html.twig', [
             'episode' => $episode,
             'season' => $season,
             'program' => $program,
+            // 'slug' => $slug,
             ]);
     }
 }

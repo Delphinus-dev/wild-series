@@ -19,12 +19,14 @@
                 {% else %}
                     <p>Aucune saison trouvée.</p>
                 {% endfor %}
+                <br/>
+            </div>
+            <div>
+                <a href="{{ path('wild_index') }}">
+                    Retour à l'accueil
+                </a>
             </div>
         </div>
     </div>
-
-    <a href="{{ path('wild_index') }}">
-        Retour à l'accueil
-    </a>
 
 {% endblock %}
