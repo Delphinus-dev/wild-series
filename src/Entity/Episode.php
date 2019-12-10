@@ -47,9 +47,9 @@ class Episode
         return $this->season;
     }
 
-    public function setSeasonId(?Season $season_id): self
+    public function setSeasonId(?Season $season): self
     {
-        $this->season_id = $season_id;
+        $this->season = $season;
 
         return $this;
     }
