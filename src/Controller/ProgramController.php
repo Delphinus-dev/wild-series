@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Actor;
 use App\Entity\Program;
 use App\Form\ProgramType;
 use App\Repository\ProgramRepository;
@@ -60,6 +61,9 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="program_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Program $program
+     * @return Response
      */
     public function edit(Request $request, Program $program): Response
     {
