@@ -141,8 +141,8 @@ class WildController extends AbstractController
         $season = $this->getDoctrine()
             ->getRepository(Season::class)
             ->findOneBy(['id' => $id]);
-        $episodes =  $season->getEpisodes();
-        $program =  $season->getProgramId()->getTitle();
+        $episodes = $season->getEpisodes();
+        $program = $season->getProgramId()->getTitle();
         return $this->render('wild/season.html.twig',
             [
                 'season' => $season,
