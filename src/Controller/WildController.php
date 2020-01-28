@@ -7,7 +7,9 @@ use App\Entity\Category;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Repository\ProgramRepository;
 use App\Form\CategoryType;
+use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,19 +25,26 @@ class WildController extends AbstractController
 {
     /**
      * @Route("/", name="index")
+     * @param ProgramRepository $programRepository
+     * @return Response
      */
-    public function index() :Response
+    public function index(ProgramRepository $programRepository, SeasonRepository $seasonRepository) :Response
     {
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findAll();
+        $programs = $programRepository->findAll();
+        $seasons = $seasonRepository->findAll();
 
         if (!$programs) {
             throw $this-> createNotFoundException(
-                'No program found in program\'s table'
+                'No program found'
             );
         }
-            return $this->render('wild/index.html.twig', ['programs' => $programs]);
+            return $this->render('home.html.twig',
+                [
+                    'programs' => $programs,
+                'seasons' => $seasons,
+                'site' => 'Wild Séries'
+                ]
+            );
     }
 
     /**

@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Actor index</h1>
 
+    <a href="{{ path('actor_new') }}">Create new</a>
+
     <table class="table">
         <thead>
             <tr>
@@ -30,6 +32,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('actor_new') }}">Create new</a>
 {% endblock %}

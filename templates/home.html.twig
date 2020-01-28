@@ -2,4 +2,18 @@
 
 {% block body %}
 <h1>Bienvenue sur {{ site }} !</h1>
+<div class="card-deck">
+    {% for program in programs %}
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="{{program.poster}}" alt="{{ program.title }} poster">
+            <div class="card-body">
+                <h5 class="card-title">{{ program.title }}</h5>
+                <p class="card-text">Catégorie : {{ program.category.name }}</p>
+                <p class="card-text">{{ program.summary }}</p>
+                <a href="{{ path('program_show',{'id':program.id}) }}" class="btn btn-primary">Détails</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

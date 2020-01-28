@@ -10,10 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/season")
+ */
 class SeasonController extends AbstractController
 {
     /**
-     * @Route("/season", name="season_index", methods={"GET"})
+     * @Route("/", name="season_index", methods={"GET"})
      */
     public function index(SeasonRepository $seasonRepository): Response
     {
