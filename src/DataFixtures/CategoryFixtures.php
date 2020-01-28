@@ -20,7 +20,6 @@ class CategoryFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        /* ALTERNATIVE (sans constantes) :
         foreach (self::CATEGORIES as $key => $categoryName) {
             $category = new Category();
             $category->setName($categoryName);
@@ -28,13 +27,30 @@ class CategoryFixtures extends Fixture
             $this->addReference('categorie_' . $key, $category);
         }
         $manager->flush();
-        */
+    }
+}
 
-        for ($i = 1; $i <= 50; $i++) {
+/*
+
+ALTERNATIVES :
+
+ for ($i = 1; $i <= 50; $i++) {
             $category = new Category();
             $category->setName('categorie_' . $i);
             $manager->persist($category);
+            $this->addReference('categorie_'.$i, $category);
         }
         $manager->flush();
     }
-}
+
+public function load(ObjectManager $manager)
+    {
+        foreach (self::CATEGORIES as $categorie => $name) {
+            $category = new Category();
+            $category->setName($name);
+            $manager->persist($category);
+            $this->addReference('categorie_' . $categorie, $category);
+        }
+        $manager->flush();
+    }
+ */
