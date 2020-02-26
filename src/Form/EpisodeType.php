@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Episode;
+use App\Entity\Season;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +17,15 @@ class EpisodeType extends AbstractType
             ->add('title')
             ->add('number')
             ->add('synopsis')
-            ->add('season', null, ['choice_label' => 'number'])
+            ->add('season_id', EntityType::class, [
+                // looks for choices from this entity
+                'class' => Season::class,
+                // uses the Season.number property as the visible option string
+                'choice_label' => 'id',
+                // used to render a select box, check boxes or radios
+                // 'multiple' => true,
+                // 'expanded' => true,
+            ])
         ;
     }
 
