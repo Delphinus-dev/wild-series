@@ -50,7 +50,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setSummary($data['summary']);
             $program->setPoster($this->faker->imageUrl($width = 200, $height = 400));
             $program->setCategory($this->getReference('categorie_4')); // categorie_0 fait référence à la première catégorie générée.
-            $program->setSlug(Slugify::class::generate($program->getTitle()));
+            $program->setSlug((new Slugify)->generate($program->getTitle()));
             $manager->persist($program);
             $this->addReference('program_'.$i, $program);
             $i++;

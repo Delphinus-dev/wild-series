@@ -25,8 +25,8 @@
                 <td>{{ program.summary }}</td>
                 <td>{{ program.poster }}</td>
                 <td>
-                    <a href="{{ path('program_show', {'id': program.id}) }}">show</a>
-                    <a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+                    <a href="{{ path('program_show', {'slug': program.slug}) }}">show</a>
+                    <a href="{{ path('program_edit', {'slug': program.slug}) }}">edit</a>
                     <a href="{{ path('program_delete', {'id': program.id}) }}">delete</a>
                 </td>
             </tr>
