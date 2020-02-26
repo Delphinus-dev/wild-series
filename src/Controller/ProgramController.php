@@ -9,6 +9,8 @@ use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -29,7 +31,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="program_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -40,6 +42,18 @@ class ProgramController extends AbstractController
             $program->setSlug($slugify->generate($program->getTitle()));
             $entityManager->persist($program);
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from('delphine.gobbin@gmail.com')
+                ->to('delphine.gobbin@gmail.com')
+                ->subject('Wild séries | Une nouvelle série vient d\'être publiée !')
+                // ->html('<p>Une nouvelle série vient d\'être publiée sur Wild Séries !</p>')
+                ->html($this->renderView('program/email/notif.html.twig', [
+                    'title' => $program->getTitle(),
+                    'slug' => $program->getSlug(),
+                ]));
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('program_index');
         }
